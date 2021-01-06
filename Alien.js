@@ -5,7 +5,7 @@ class Alien{
     this.y = 500; //y position of alien
     this.vy = 0;  //change of y
     this.gravity = 0.5;
-    this.lives = 3;
+    this.lives= 3;
 
   }
 
@@ -13,18 +13,23 @@ class Alien{
 
   update(){
     this.move();     //make alien move
-    this.wellbeing();
+    this.wellbeing();  //check alien's life status
+
   }
 
   move(){
     if(this.lives>0){
 
-      if (keyIsDown(87)){         //w->jump
-        if(this.onFeet()==1){
-          this.vy=-10;
-          this.y += this.vy;
+        if(this.onHead()==1) this.vy=0;
+
+        if (keyIsDown(87)){         //w->jump
+          if(this.onFeet()==1 && !this.onHead()==1){
+
+            this.vy=-10;
+            this.y += this.vy;
+          }
         }
-      }
+
 
       if(!this.onFeet()==1){      //if not on land, fall
 
@@ -75,6 +80,7 @@ class Alien{
     if (this.getBlockType(0, this.size) == 1             //if on top of block
          ||this.getBlockType(this.size-5,this.size)==1) {
        this.y = (this.getLoc()[1] * 50);
+
        return 1;
     }
 
@@ -83,6 +89,15 @@ class Alien{
        this.y = (this.getLoc()[1] * 50);
 
        return 3;
+    }
+    return 0;
+  }
+
+  onHead(){
+    if (this.getBlockType(0, -5) == 1
+         ||this.getBlockType(this.size-1,0)==1) {
+       print("einai");
+       return 1;
     }
     return 0;
   }
