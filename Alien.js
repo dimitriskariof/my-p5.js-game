@@ -89,7 +89,7 @@ class Alien{
 
     if (this.getBlockType(0, this.size) == 3             //if on water
     ||this.getBlockType(this.size-5,this.size)==3) {
-       this.y = (this.getLoc()[1] * 50);
+       this.y = ((this.getLoc()[1] * 50)+30);
 
        return 3;
     }
@@ -121,7 +121,11 @@ class Alien{
 
 
   show(){
-    image (player_img,this.x,this.y,50,50);
+    if(this.lives>0){
+    image(player_img,this.x,this.y,50,50);
+  } else{
+    image(player_hurt_img,this.x,this.y,50,50);
+    }
   }
 
 }
