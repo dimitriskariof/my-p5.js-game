@@ -8,7 +8,10 @@ class level{
       for(var j=0; j<this.obj[i].length;j++){
         if(this.obj[i][j]==1) this.obj[i][j]=new Block(j*50,i*50,block1_img,1);
         if(this.obj[i][j]==3) this.obj[i][j]=new Block(j*50,i*50,water_img,3);
-        if(this.obj[i][j]==4) this.obj[i][j]=new Block(j*50,i*50,key_img,4);
+        if(this.obj[i][j]==4){ this.obj[i][j]=new Block(j*50,i*50,key_img,4);
+                               this.keyx=this.obj[i][j].posx;
+                               this.keyy=this.obj[i][j].posy
+                             }
       }
     }
 

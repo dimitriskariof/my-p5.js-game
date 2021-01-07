@@ -6,7 +6,8 @@ class Alien{
     this.vy = 0;  //change of y
     this.gravity = 0.5;
     this.lives= 3;
-    
+    this.haskey=false;
+
   }
 
 
@@ -14,6 +15,8 @@ class Alien{
   update(){
     this.move();     //make alien move
     this.wellbeing();  //check alien's life status
+    this.gotkey();
+
 
   }
 
@@ -104,6 +107,12 @@ class Alien{
 
   wellbeing(){
     if(this.onFeet()==3) this.lives=0;
+  }
+
+  gotkey(){
+    var distance = dist(this.x + lvl.offset, this.y,lvl.keyx,lvl.keyy);
+    if (distance<30) {lvl.obj[lvl.keyy/50][lvl.keyx/50]=0;this.haskey=true;
+                      lvl.keyy=1;lvl.keyx=1;}
   }
 
   go(){
