@@ -1,5 +1,6 @@
 class Alien{
   constructor(){
+
     this.size = 50;
     this.x = 50; // x position of alien
     this.y = 500; //y position of alien
@@ -7,17 +8,14 @@ class Alien{
     this.gravity = 0.5;
     this.lives= 3;
     this.haskey=false;
-
+    this.won=0;
   }
-
-
 
   update(){
     this.move();     //make alien move
     this.wellbeing();  //check alien's life status
     this.gotkey();
-
-
+    this.victory();
   }
 
   move(){
@@ -25,7 +23,7 @@ class Alien{
 
         if(this.onHead()==1) {this.vy=0;}
 
-        if (keyIsDown(87)){         //w->jump
+        if (keyIsDown(87)){                 //w->jump
           if(this.onFeet()==1 && !this.onHead()==1){
 
             this.vy=-10;
@@ -33,22 +31,21 @@ class Alien{
           }
         }
 
-
-      if(!this.onFeet()==1){      //if not on land, fall
+      if(!this.onFeet()==1){         //if not on land, fall
 
         this.vy += this.gravity;
         this.y+=this.vy;
       }
 
-      if (keyIsDown(68)){        //d->go right
-        if(!this.getBlockType(this.size+5,+5)==1){
+      if (keyIsDown(68)){                   //d->go right
+        if(this.BlockType(this.size+5,+5)!=1){
           this.x+=2.2;
           lvl.offset+=2.2;
 
         }
       }
-      if (keyIsDown(65)){        //a->go left
-        if(!this.getBlockType(-5,+5)==1){
+      if (keyIsDown(65)){                   //a->go left
+        if(this.BlockType(-5,+5)!=1){
           this.x-=2.2;
           lvl.offset-=2.2;
         }
@@ -56,40 +53,49 @@ class Alien{
 
 
     }else {
-        textSize(30);
-        text("Game Over", 700, 250);
-        textSize(20);
-        text("Press r to restart",712,300);
-        if(keyIsDown(82)){            //reset
-          this.x=50;
-          lvl.offset-=lvl.offset;
-          this.lives=3;
-        }
+        if(this.won==0){
+          textSize(30);
+          text("Game Over", 700, 250);
+          textSize(20);
+          text("Press r to restart",712,300);
+          if(keyIsDown(82)){            //reset
+            this.x=50;
+            lvl.offset-=lvl.offset;
+            this.lives=3;
+            this.haskey=false;
+            this.keyreset();
+
+          }
       }
+    }
   }
 
-  getBlockType(dx = 0, dy = 0) {                    //returns type of block at
-    var z = this.getLoc(this.x + dx, this.y + dy);  //player pos +some dx,dy
+  //key reappear
+  keyreset(){if(this.lives>0)lvl.obj[lvl.keyy/50][lvl.keyx/50]=new
+  Block(lvl.keyx,lvl.keyy,key_img,4);}
+
+  BlockType(dx = 0, dy = 0) {                    //returns type of block at
+    var z = this.loc(this.x + dx, this.y + dy);  //player pos +some dx,dy
     return lvl.obj[z[1]][z[0]].type;
   }
 
-  getLoc(x = this.x, y = this.y) {                  //returns location on the level grid
+  loc(x = this.x, y = this.y) {                  //returns location on the level grid
     var location = [floor((x + lvl.offset) / 50), floor(y / 50)];
     return location;
   }
 
   onFeet(){                                               //check player position
                                                           //relative to other elements
-    if (this.getBlockType(+5, this.size) == 1             //if on top of block
-         ||this.getBlockType(this.size-5,this.size)==1) {
-       this.y = (this.getLoc()[1] * 50);
+    if (this.BlockType(+5, this.size) == 1                //if on top of block
+         ||this.BlockType(this.size-5,this.size)==1) {
+       this.y = (this.loc()[1] * 50);
 
        return 1;
     }
 
-    if (this.getBlockType(0, this.size) == 3             //if on water
-    ||this.getBlockType(this.size-5,this.size)==3) {
-       this.y = (this.getLoc()[1] * 50);
+    if (this.BlockType(0, this.size) == 3             //if on water
+        ||this.BlockType(this.size-5,this.size)==3){
+       this.y = (this.loc()[1] * 50);
 
        return 3;
     }
@@ -97,8 +103,8 @@ class Alien{
   }
 
   onHead(){
-    if (this.getBlockType(+4.5, -1) == 1
-         ||this.getBlockType(this.size-5,0)==1) {
+    if (this.BlockType(+4.5, -1) == 1
+         ||this.BlockType(this.size-5,0)==1) {
 
        return 1;
     }
@@ -112,21 +118,32 @@ class Alien{
   gotkey(){
     var distance = dist(this.x + lvl.offset, this.y,lvl.keyx,lvl.keyy);
     if (distance<30) {lvl.obj[lvl.keyy/50][lvl.keyx/50]=0;this.haskey=true;
-                      lvl.keyy=1;lvl.keyx=1;}
+                      }
+  }
+
+  victory(){
+    var distance = dist(this.x + lvl.offset, this.y,lvl.doorx,lvl.doory);
+    if (distance<30 && this.haskey) { lvl.obj[lvl.doory/50][lvl.doorx/50].img=open_door_img;
+                        this.lives=0; this.won=1;
+                      }
   }
 
   go(){
     this.x = this.x + 10;
   }
 
-
   show(){
     if(this.lives>0){
     image(player_img,this.x,this.y,50,50);
-  } else{
+   }else if(this.lives==0 && this.won==0){
     this.y+=30;
     image(player_hurt_img,this.x,this.y,50,50);
     }
-  }
+    else{
 
+    image(player_img,this.x,this.y,50,50);
+      textSize(30);
+      text("VICTORY!!!", 700, 350);
+    }
+  }
 }

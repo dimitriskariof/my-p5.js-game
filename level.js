@@ -12,6 +12,10 @@ class level{
                                this.keyx=this.obj[i][j].posx;
                                this.keyy=this.obj[i][j].posy
                              }
+        if(this.obj[i][j]==7){ this.obj[i][j]=new Block(j*50,i*50,closed_door_img,7);
+                               this.doorx=this.obj[i][j].posx;
+                               this.doory=this.obj[i][j].posy
+                             }
       }
     }
 
