@@ -23,7 +23,7 @@ class Alien{
   move(){
     if(this.lives>0){
 
-        if(this.onHead()==1) this.vy=0;
+        if(this.onHead()==1) {this.vy=0;}
 
         if (keyIsDown(87)){         //w->jump
           if(this.onFeet()==1 && !this.onHead()==1){
@@ -41,16 +41,16 @@ class Alien{
       }
 
       if (keyIsDown(68)){        //d->go right
-        if(!this.getBlockType(this.size,0)==1){
-          this.x+=3;
-          lvl.offset+=3;
+        if(!this.getBlockType(this.size+5,+5)==1){
+          this.x+=2.2;
+          lvl.offset+=2.2;
 
         }
       }
       if (keyIsDown(65)){        //a->go left
-        if(!this.getBlockType(-1,0)==1){
-          this.x-=3;
-          lvl.offset-=3;
+        if(!this.getBlockType(-5,+5)==1){
+          this.x-=2.2;
+          lvl.offset-=2.2;
         }
       }
 
@@ -59,7 +59,7 @@ class Alien{
         textSize(30);
         text("Game Over", 700, 250);
         textSize(20);
-        text("Press r to reset",712,300);
+        text("Press r to restart",712,300);
         if(keyIsDown(82)){            //reset
           this.x=50;
           lvl.offset-=lvl.offset;
@@ -80,7 +80,7 @@ class Alien{
 
   onFeet(){                                               //check player position
                                                           //relative to other elements
-    if (this.getBlockType(0, this.size) == 1             //if on top of block
+    if (this.getBlockType(+5, this.size) == 1             //if on top of block
          ||this.getBlockType(this.size-5,this.size)==1) {
        this.y = (this.getLoc()[1] * 50);
 
@@ -89,7 +89,7 @@ class Alien{
 
     if (this.getBlockType(0, this.size) == 3             //if on water
     ||this.getBlockType(this.size-5,this.size)==3) {
-       this.y = ((this.getLoc()[1] * 50)+30);
+       this.y = (this.getLoc()[1] * 50);
 
        return 3;
     }
@@ -97,7 +97,7 @@ class Alien{
   }
 
   onHead(){
-    if (this.getBlockType(+3, -1) == 1
+    if (this.getBlockType(+4.5, -1) == 1
          ||this.getBlockType(this.size-5,0)==1) {
 
        return 1;
@@ -124,6 +124,7 @@ class Alien{
     if(this.lives>0){
     image(player_img,this.x,this.y,50,50);
   } else{
+    this.y+=30;
     image(player_hurt_img,this.x,this.y,50,50);
     }
   }
