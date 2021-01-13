@@ -117,7 +117,11 @@ class Alien{
 
   gotkey(){
     var distance = dist(this.x + lvl.offset, this.y,lvl.keyx,lvl.keyy);
-    if (distance<30) {lvl.obj[lvl.keyy/50][lvl.keyx/50]=0;this.haskey=true;
+    if (distance<30) {
+      if(lvl.obj[lvl.keyy/50][lvl.keyx/50]!=0){keysound.play();}
+      lvl.obj[lvl.keyy/50][lvl.keyx/50]=0;
+      this.haskey=true;
+
                       }
   }
 

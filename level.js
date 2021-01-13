@@ -16,6 +16,8 @@ class level{
                                this.doorx=this.obj[i][j].posx;
                                this.doory=this.obj[i][j].posy
                              }
+        if(this.obj[i][j]==2){ this.obj[i][j]=new Enemy(j*50,i*50,enemy_img,5,2);
+                            }
       }
     }
 
@@ -26,6 +28,10 @@ class level{
       for (var j = 0; j < this.obj[i].length; j++) {
         if (this.obj[i][j] != 0) {
           if (this.obj[i][j].constructor.name=="Block") {
+            this.obj[i][j].draw(this.offset, 0);
+
+          }
+          if (this.obj[i][j].constructor.name=="Enemy") {
             this.obj[i][j].draw(this.offset, 0);
 
           }

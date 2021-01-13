@@ -23,9 +23,13 @@ function preload(){
   player_hurt_img=loadImage('images/hurt.png');
   closed_door_img=loadImage('images/door_closed.png');
   open_door_img=loadImage('images/door_open.png');
+  music = loadSound('sounds/bgmusic.mp3');
+  keysound=loadSound('sounds/keysound.mp3')
 }
 
 function setup() {
+  music.play();
+  music.setVolume(0.1);
   createCanvas(1750,600);
   lvl=new level(lvl1);
   player=new Alien();
