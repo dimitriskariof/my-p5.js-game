@@ -3,6 +3,7 @@ class level{
 
     this.obj = objects;
     this.offset = 0;
+    this.enemies = [];
 
     for(var i=0; i<this.obj.length;i++){
       for(var j=0; j<this.obj[i].length;j++){
@@ -17,6 +18,7 @@ class level{
                                this.doory=this.obj[i][j].posy
                              }
         if(this.obj[i][j]==2){ this.obj[i][j]=new Enemy(j*50,i*50,enemy_img,5,2);
+                               this.enemies.push(this.obj[i][j]);
                             }
       }
     }
