@@ -55,7 +55,6 @@ class Alien {
         }
       }
 
-
     } else {
       if (this.won == 0) {
         textSize(30);
@@ -80,19 +79,19 @@ class Alien {
     Block(lvl.keyx, lvl.keyy, key_img, 4);
   }
 
-  BlockType(dx = 0, dy = 0) { //returns type of block at
-    var z = this.loc(this.x + dx, this.y + dy); //player pos +some dx,dy
+  BlockType(dx = 0, dy = 0) {                         //returns type of block at
+    var z = this.loc(this.x + dx, this.y + dy);       //player pos +some dx,dy
     return lvl.obj[z[1]][z[0]].type;
   }
 
-  loc(x = this.x, y = this.y) { //returns location on the level grid
+  loc(x = this.x, y = this.y) {                       //returns location on the level grid
     var location = [floor((x + lvl.offset) / 50), floor(y / 50)];
     return location;
   }
 
-  onFeet() { //check player position
-    //relative to other elements
-    if (this.BlockType(+5, this.size) == 1 //if on top of block
+  onFeet() {                                             //check player position
+                                                        //relative to other elements
+    if (this.BlockType(+5, this.size) == 1              //if on top of block
       ||
       this.BlockType(this.size - 5, this.size) == 1) {
       this.y = (this.loc()[1] * 50);
@@ -100,7 +99,7 @@ class Alien {
       return 1;
     }
 
-    if (this.BlockType(0, this.size) == 3 //if on water
+    if (this.BlockType(0, this.size) == 3               //if on water
       ||
       this.BlockType(this.size - 5, this.size) == 3) {
       this.y = (this.loc()[1] * 50);
@@ -110,7 +109,7 @@ class Alien {
     return 0;
   }
 
-  onHead() {
+  onHead() {                                        //check for block above alien's head
     if (this.BlockType(+4.5, -1) == 1 ||
       this.BlockType(this.size - 5, 0) == 1) {
 
@@ -119,7 +118,7 @@ class Alien {
     return 0;
   }
 
-  wellbeing() {
+  wellbeing() {                                     //check alien's life status
     if (this.onFeet() == 3) this.lives = 0;
     this.injury();
 
@@ -129,7 +128,7 @@ class Alien {
     this.update_timer();
   }
 
-  injury() {
+  injury() {                                                    //check if alien touched an enemy
     for (var i = 0; i < lvl.enemies.length; i++) {
       var distance = dist(this.x + lvl.offset, this.y, lvl.enemies[i].x, lvl.enemies[i].y)
       if (distance < 40) {
@@ -139,7 +138,7 @@ class Alien {
     return false;
   }
 
-  update_timer() {
+  update_timer() {              //injury timer. alien can't be injured again for some time
     if (this.injury()) {
       this.timer = 100;
     }
@@ -170,10 +169,6 @@ class Alien {
     }
   }
 
-  go() {
-    this.x = this.x + 10;
-  }
-
   show() {
     if (this.lives > 0) {
       if (this.timer > 0) {
@@ -195,5 +190,9 @@ class Alien {
       textSize(30);
       text("VICTORY!!!", 700, 350);
       }
+
+     for (var i = 0; i < this.lives; i++) {
+       image(heart_img,730+(i*40),10,30,30)
+     }
     }
 }
