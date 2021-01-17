@@ -124,37 +124,38 @@ class Alien {
     this.injury();
 
     if (this.injury() && this.timer == 0) {
-      this.lives--;
+      if(this.lives>0)this.lives--;
     }
     this.update_timer();
   }
 
-  injury() {                                           //check if player touched an enemy
+  injury() {
     for (var i = 0; i < lvl.enemies.length; i++) {
       var distance = dist(this.x + lvl.offset, this.y, lvl.enemies[i].x, lvl.enemies[i].y)
-      if (distance < 30) {
+      if (distance < 40) {
         return true;
       }
-      return false;
     }
+    return false;
   }
 
-  update_timer() {                //protection timer after injury
-    if (this.injury()) {          //player can't be injured again for some time
+  update_timer() {
+    if (this.injury()) {
       this.timer = 100;
     }
     if (this.timer > 0) {
       this.timer--;
+
     }
   }
 
   gotkey() {
-    var distance = dist(this.x + lvl.offset, this.y, lvl.keyx, lvl.keyy);     //check if player near key
+    var distance = dist(this.x + lvl.offset, this.y, lvl.keyx, lvl.keyy);
     if (distance < 30) {
       if (lvl.obj[lvl.keyy / 50][lvl.keyx / 50] != 0) {
         keysound.play();
       }
-      lvl.obj[lvl.keyy / 50][lvl.keyx / 50] = 0;              //disappear key
+      lvl.obj[lvl.keyy / 50][lvl.keyx / 50] = 0;
       this.haskey = true;
 
     }
@@ -169,6 +170,10 @@ class Alien {
     }
   }
 
+  go() {
+    this.x = this.x + 10;
+  }
+
   show() {
     if (this.lives > 0) {
       if (this.timer > 0) {
@@ -177,16 +182,18 @@ class Alien {
         image(player_img, this.x, this.y, 50, 50);
       }
 
-    } else if (this.lives == 0 && this.won == 0 && this.onFeet() == 3) {
+    }
+    if (this.lives == 0 && this.won == 0 && this.onFeet() == 3) {
       this.y += 30;
       image(player_hurt_img, this.x, this.y, 50, 50);
-    } else if (this.lives == 0 && this.won == 0) {
+    }
+    if (this.lives == 0 && this.won == 0) {
       image(player_hurt_img, this.x, this.y, 50, 50);
-    } else {
-
+    }
+     if(this.won==1){
       image(player_img, this.x, this.y, 50, 50);
       textSize(30);
       text("VICTORY!!!", 700, 350);
+      }
     }
-  }
 }

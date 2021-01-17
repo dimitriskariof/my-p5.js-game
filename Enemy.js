@@ -14,7 +14,11 @@ class Enemy {
   update(){
     if(this.type==2){
       this.x+=this.speed;
-      if(this.initx-this.x==200 || this.initx-this.x==-200 ) this.speed=-this.speed;  //change direction after some distance
+      if(this.initx-this.x>200 || this.initx-this.x<-100 ) this.speed=-this.speed;
+    }
+    if(this.type==5){
+      this.y+=this.speed;
+      if(this.inity-this.y>150 || this.inity-this.y<-100 ) this.speed=-this.speed;
     }
   }
 

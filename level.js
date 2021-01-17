@@ -17,7 +17,10 @@ class level{
                                this.doorx=this.obj[i][j].posx;
                                this.doory=this.obj[i][j].posy
                              }
-        if(this.obj[i][j]==2){ this.obj[i][j]=new Enemy(j*50,i*50,enemy_img,5,2);
+        if(this.obj[i][j]==2){ this.obj[i][j]=new Enemy(j*50,i*50,enemy_img,3,2);
+                               this.enemies.push(this.obj[i][j]);
+                            }
+        if(this.obj[i][j]==5){ this.obj[i][j]=new Enemy(j*50,i*50,enemy_img,3,5);
                                this.enemies.push(this.obj[i][j]);
                             }
       }
