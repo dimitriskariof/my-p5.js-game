@@ -34,8 +34,8 @@ function preload(){
 
 function setup() {
   player_inj.filter(THRESHOLD);
-  music.loop();
   music.setVolume(0.1);
+  if(!music.isPlaying()) music.play(;
   createCanvas(2600,600);
   lvl=new level(lvl1);
   player=new Alien();

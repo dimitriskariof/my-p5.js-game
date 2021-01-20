@@ -13,8 +13,8 @@ class Alien {
   }
 
   update() {
+    
     this.move(); //make alien move
-
     this.wellbeing(); //check alien's life status
     this.gotkey();
     this.victory();
@@ -54,6 +54,7 @@ class Alien {
           lvl.offset -= 2.2;
         }
       }
+
 
     } else {
       if (this.won == 0) {
@@ -123,7 +124,7 @@ class Alien {
     this.injury();
 
     if (this.injury() && this.timer == 0) {
-      if(this.lives>0)this.lives--;
+      if(this.lives>0){this.lives--; hitsound.play();}
     }
     this.update_timer();
   }
